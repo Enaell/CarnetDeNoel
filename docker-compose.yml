@@ -1,0 +1,33 @@
+version: "3"
+services:
+    lla-client:
+        container_name: lla-client
+        build:
+            context: ./client
+            dockerfile: Dockerfile
+        image: enael/languagelearningclient
+        ports:
+            - "3000:3000"
+        volumes:
+            - ./client:/usr/src/app
+        stdin_open: true
+    lla-server:
+        container_name: lla-server
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        image: enael/languagelearningserver
+        ports:
+            - "5000:5000"
+        volumes:
+            - ./server:/usr/src/app
+        links:
+            - mongo
+    mongo:
+        container_name: mongo
+        image: mongo
+        ports:
+            - "27017:27017"
+
+
+
