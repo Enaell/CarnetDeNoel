@@ -20,10 +20,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   whiteButton: {
     borderRadius: '50px',
-    backgroundColor: 'white',
-    color: theme.palette.primary.main,
-    borderColor: theme.palette.primary.main,
-    textTransform: 'none'
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white',
+    borderColor: theme.palette.secondary.light,
+    '&:hover': {
+      color: 'white',
+      backgroundColor: theme.palette.secondary.dark,
+      borderColor: theme.palette.secondary.main,
+    }
   },
   darkButton: {
     borderRadius: '5px',

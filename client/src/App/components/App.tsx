@@ -58,7 +58,6 @@ class App extends Component {
             <Column horizontal='center' width='100%' style={{backgroundColor: '#f9f9f9'}}>
               <Navbar />
               <Routes />
-              <Footer />
             </Column>
           </BrowserRouter>
         </ThemeProvider>

@@ -2,6 +2,8 @@ export const types= ['Livre', 'Technologie', 'Cuisine', 'Vetement', 'Jeux'];
 
 export const visibilities= ['loggedin', 'owner'];
 
+export const familyMembers = ['Isabelle', 'Luigi', 'Eric', 'Hervé', 'Valérie', 'Thomas', 'Sylvie', 'Aurelien', 'Lulu', 'Audrey', 'Dorian', 'Fabien', 'Eva', 'Yann', 'Noah', 'Titouan', 'Peyo'];
+
 export function renameObjectKey(keysMap: {[key: string]: string}, obj: {[key: string]: any}){
   return Object.keys(obj).reduce((acc, key) => ({
     ...acc,

@@ -1,5 +1,5 @@
 // import firstPagePict from './ressources/learning-a-foreign-language.jpg'
-import firstPagePict from '../ressources/learnlanguage.jpg'
+import firstPagePict from '../ressources/landing.jpg'
 
 export const welcomeSection = {
     height: '100vh',

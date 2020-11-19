@@ -55,7 +55,7 @@ export const LoginTabs = ({
                 value={orientation === 'horizontal' ? tabNumber - 1 : tabNumber}
                 onChange={handleTabChange}
                 indicatorColor="primary"
-                textColor="primary"
+                textColor="secondary"
                 centered
                 style={orientation === 'vertical' ? {paddingTop: '15px'}: {}}
             >

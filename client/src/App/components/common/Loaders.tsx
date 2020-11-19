@@ -21,29 +21,30 @@ const useStyles = makeStyles((theme: Theme) => ({
   loader: {
     display: 'inline-block',
     position: 'relative',
-    width: '64px',
+    width: '104px',
     height: '10px',
+    padding: '7px 0 7px 0', 
     '& div': {
       position: 'absolute',
       width: '11px',
       height: '11px',
       borderRadius: '50%',
-      background: 'rgba(0, 0, 0, 0.87)',
+      background: 'white',
       animationTimingFunction: 'cubic-bezier(0, 1, 1, 0)',
       '&:nth-child(1)': {
-        left: '6px',
+        left: '26px',
         animation: '$loader1 0.6s infinite',
       },
       '&:nth-child(2)': {
-        left: '6px',
-        animation: '$loader2 0.6s infinite',
-      },
-      '&:nth-child(3)': {
         left: '26px',
         animation: '$loader2 0.6s infinite',
       },
+      '&:nth-child(3)': {
+        left: '46px',
+        animation: '$loader2 0.6s infinite',
+      },
       '&:nth-child(4)': {
-        left: '45px',
+        left: '65px',
         animation: '$loader3 0.6s infinite',
       },
     },

@@ -9,20 +9,21 @@ const theme = createMuiTheme({
       contrastText: 'white',
     },
     secondary:{
-      light: '#fff',
-      main: '#e8f5e9',
-      dark: '#b6c2b7',
-      contrastText: '#424242',
+      light: '#f75d46',
+      main: '#e4472f',
+      dark: '#bf2f19',
+      contrastText: 'white',
     },
     background: {
       default: '#f9f9f9',
     }
   },
-  // typography: {
+  typography: {
+    fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif'
   //   button: {
   //     textTransform: 'none'
   //   }
-  // }
+  }
 });
 
 export default theme;

@@ -62,7 +62,7 @@ export const WelcomeSection = ({
     if (!(usError || pError || eaError))
       {
         await onSignin(username, emailAddress, password);
-        history.push('notebook/gifts')
+        history.replace('/notebook/gifts')
       }
   };
 
@@ -74,7 +74,7 @@ export const WelcomeSection = ({
 
     if (!(pError || eaError)) {
       await onLogin(emailAddress, password);
-      history.push('notebook/gifts');
+      history.replace('/notebook/gifts');
     }
   };
 
@@ -90,7 +90,7 @@ export const WelcomeSection = ({
       <div style={backgroundImg}/>
       <Column horizontal='end' width='45%'>
         <Column horizontal={'start'} style={ connectionDiv }>
-          <Typography color="primary" variant='h3' noWrap>
+          <Typography  style={{fontWeight : 'bold'}} color="secondary" variant='h2' noWrap>
             {translate('application-name')}
           </Typography>
           <form style={{width: '100%', height: '100%', paddingTop: '20px'}}>

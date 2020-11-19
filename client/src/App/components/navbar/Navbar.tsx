@@ -73,7 +73,7 @@ export const Navbar = withRouter(({
                 <MenuIcon />
               </IconButton>}
               <Button className={classes.homeButton} onClick={handleOnMainPageRedirectionClick}>
-                <Typography color={ (user.token) ? 'secondary' : 'primary'}  variant="h6" noWrap>
+                <Typography color={ (user.token) ? 'inherit' : 'primary'} style={ user.token ? {color: 'white'} : {}} variant="h6" noWrap>
                   {translate('application-name')}
                 </Typography>
               </Button>

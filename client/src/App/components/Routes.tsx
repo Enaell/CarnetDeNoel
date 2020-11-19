@@ -18,7 +18,7 @@ const RoutesSwitch = ({isLogged}: {isLogged?: boolean}) => {
   return (
     <>
       { isLogged ?
-      <div style={{marginTop:'75px', width:'100%', minHeight: 'calc(100vh - 140px)'}}>
+      <div style={{width:'100%', minHeight: '100vh'}}>
         <RouterSwitch>
           <Route exact path="/" component={LandingPage}/>
           <Route path="/notebook" component={NotebookPage}/>
