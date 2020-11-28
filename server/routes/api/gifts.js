@@ -11,37 +11,35 @@ router.get('/', auth.optional, (req, res, next) => {
 
     if (payload && payload.id && payload.role === ROLES.Admin)
     {
-        Gifts.find({...language})
-        .then(Gifts => {
+        Gifts.find({...language}).populate('owner')
+        .then(gifts => {
             console.log('API Gifts get all Gifts as ADMIN or MODERATOR')
-            console.log(Gifts);
-            return res.json({Gifts})
+            console.log(gifts);
+            return res.json({gifts})
         })
     }
     else if (payload && payload.id)
     {
-        Gifts.find({$or:[{ visibility: VISIBILITY.LoggedIn }, {visibility: VISIBILITY.Owner }] })
-        .then(Gifts => {
+        Gifts.find({$or:[{ visibility: VISIBILITY.LoggedIn }, {visibility: VISIBILITY.Owner }] }).populate('owner')
+        .then(gifts => {
             console.log('API Gifts get all Gifts as CUSTOMER')
-            console.log(Gifts);
-            return res.json({Gifts})
+            return res.json(formatter.formatGiftByMember(gifts))
          })
     }
 });
 
 router.post('/', auth.required, async (req, res, next) => {
     const { payload: { id, role } } = req;
-    const { body: { Gifts } } = req;
-
+    const { body: { gifts } } = req;
     try {
-        const finalGifts = Gifts.map(gift => {
+        const finalGifts = gifts.map(gift => {
             return new Gifts({
                 ...gift,
                 owner: id,
             })
         })
         const data = await Gifts.collection.insertMany(finalGifts);
-        res.json({Gifts: data})
+        res.json({gifts: data})
     }
     catch(error) {
         console.log("Couldn't save Gifts");
@@ -50,20 +48,21 @@ router.post('/', auth.required, async (req, res, next) => {
     };
 });
 
-router.patch('/', auth.required, async (req, res, next) => {
+router.patch('/:giftId', auth.required, async (req, res, next) => {
     try {
         const { payload: { id, role } } = req;
         const { body: {gift} } = req;
-        
-        const owner = await Users.findOne({username: gift.owner})
-        if (owner._id !== id && !(role === ROLES.Admin))
-            return res.status(401).send({status: 401, message: "User is not allowed to modify other's gift"});
+        const giftId = req.params.giftId;
+
+        // if (id !== giftId && !(role === ROLES.Admin))
+        //     return res.status(401).send({status: 401, message: "User is not allowed to modify other's gift"});
         
             
         const giftUpdates = formatter.formatGiftUpdates(gift);
 
-        const w = await Gifts.findByIdAndUpdate(gift.id, giftUpdates, {new: true})
+        console.log(giftUpdates);
 
+        const w = await Gifts.findByIdAndUpdate(giftId, giftUpdates, {new: true})
         return res.status(200).send({status:200, message: w})
     } catch (error) {
         console.log("Couldn't update gift");

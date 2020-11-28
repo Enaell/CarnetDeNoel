@@ -2,19 +2,13 @@ import React from 'react';
 
 import { Route, Switch as RouterSwitch } from 'react-router-dom'
 import RouteNotFound from './RouteNotfound';
-import { connect } from 'react-redux';
 import { LandingPage } from './landingPage/LandingPage';
 import { NotebookPage } from './notebook/NotebookPage';
+import { useSelector } from 'react-redux';
 
-
-function mapStateToProps(state: any){
-  return {
-    isLogged: state.user && (state.user.token)
-  }
-}
-
-
-const RoutesSwitch = ({isLogged}: {isLogged?: boolean}) => {
+const RoutesSwitch = () => {
+  
+  const isLogged = useSelector((state: any) => state.user?.token)
   return (
     <>
       { isLogged ?
@@ -30,4 +24,4 @@ const RoutesSwitch = ({isLogged}: {isLogged?: boolean}) => {
   )
 }
 
-export default connect(mapStateToProps, null) (RoutesSwitch)
+export default RoutesSwitch

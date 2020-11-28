@@ -1,7 +1,7 @@
 import React from 'react';
-import { GiftType } from './types';
+import { giftKind, GiftType } from './types';
 import translate from 'counterpart';
-import { types, visibilities } from '../common/utils';
+import { giftTypes, visibilities } from '../common/utils';
 import Typography from '@material-ui/core/Typography';
 import { Card, CardContent, PropTypes, Divider, ListItemSecondaryAction, IconButton, TextField, FormControlLabel, FormControl, Button, withStyles, Switch } from '@material-ui/core';
 import List from '@material-ui/core/List';
@@ -19,7 +19,6 @@ const styles = {
 }
 
 export const GiftCard = ({
-  isAdmin=false,
   gift= {} as GiftType, 
   setGift = ()=> {},
   giftErrors = {
@@ -35,7 +34,6 @@ export const GiftCard = ({
   giftDetailAlign='center',
   style
   }: {
-  isAdmin?: boolean,
   gift?: GiftType,
   setGift?: (giftUpdated: GiftType) => void,
   giftErrors?: {
@@ -45,10 +43,10 @@ export const GiftCard = ({
   }
   modify?: boolean,
   elevation?: number,
-  align: PropTypes.Alignment,
+  align?: PropTypes.Alignment,
   variant?: "inherit" | "button" | "caption" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2" | "body1" | "body2" | "overline" | "srOnly" | undefined,
   giftDetailVariant?: "inherit" | "button" | "caption" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "subtitle1" | "subtitle2" | "body1" | "body2" | "overline" | "srOnly" | undefined,
-  giftDetailAlign: PropTypes.Alignment,
+  giftDetailAlign?: PropTypes.Alignment,
   style?: any 
 }) => {
 
@@ -86,7 +84,7 @@ export const GiftCard = ({
           style={styles.marginTop15}
           multiple
           limitTags={8}
-          options={types}
+          options={giftTypes}
           getOptionLabel={(subject: string) => translate(`types.${subject}`)}
           value={gift?.types}
           filterSelectedOptions

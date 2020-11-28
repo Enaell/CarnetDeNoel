@@ -38,14 +38,15 @@ export const WelcomeSection = ({
   const [passwordError, setPasswordError] = useState(false);
 
 
-  function handleUserNameChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
-    setUsername(event.target.value);
+  function handleUserNameChange(value: string){
+    setUsername(value);
   }
 
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
     setEmailAddress(event.target.value);
   }
 
+  // function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
   function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
     setPassword(event.target.value);
   }
@@ -60,10 +61,10 @@ export const WelcomeSection = ({
     setEmailAddressError(eaError);
 
     if (!(usError || pError || eaError))
-      {
-        await onSignin(username, emailAddress, password);
-        history.replace('/notebook/gifts')
-      }
+    {
+      await onSignin(username, emailAddress, password);
+      history.replace('/notebook/gifts')
+    }
   };
 
   const onLoginClick = async() => {
@@ -73,8 +74,9 @@ export const WelcomeSection = ({
     setPasswordError(pError);
 
     if (!(pError || eaError)) {
+    {
       await onLogin(emailAddress, password);
-      history.replace('/notebook/gifts');
+      history.replace('/notebook/gifts');}
     }
   };
 

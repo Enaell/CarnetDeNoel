@@ -28,7 +28,10 @@ router.post('/', auth.optional, (req, res, next) => {
   finalUser.setPassword(user.password);
 
   return finalUser.save()
-    .then(frontUser => res.json({ user: frontUser }))
+    .then(frontUser => {
+      frontUser.token = frontUser.generateJWT();
+      res.json({ user: frontUser.toAuthJSON() })
+    })
     .catch((error) => {
       res.status(500).json({ error });
     });

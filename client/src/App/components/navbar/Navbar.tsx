@@ -64,16 +64,16 @@ export const Navbar = withRouter(({
 
    return(
     <div className={classes.root}>
-      <AppBar elevation={(user.token)? 4: 0} position='fixed' color={ (user.token) ? 'primary' : 'transparent'}>
+      <AppBar elevation={0} position='fixed' color={'transparent'}>
         <Toolbar>
           <Row width='100%' vertical='center' horizontal='space-between'>
             <Row  className={classes.grow}>
               {user.token &&
-              <IconButton onClick={handleSideMenuClick} className={classes.menuButton} color="primary" aria-label="Open drawer">
+              <IconButton onClick={handleSideMenuClick} className={classes.menuButton} style={{color: 'white'}} aria-label="Open drawer">
                 <MenuIcon />
               </IconButton>}
               <Button className={classes.homeButton} onClick={handleOnMainPageRedirectionClick}>
-                <Typography color={ (user.token) ? 'inherit' : 'primary'} style={ user.token ? {color: 'white'} : {}} variant="h6" noWrap>
+                <Typography style={{color: 'white'}} variant="h6" noWrap>
                   {translate('application-name')}
                 </Typography>
               </Button>
@@ -81,21 +81,7 @@ export const Navbar = withRouter(({
             <Row className={classes.grow}>
             </Row>
             <Row horizontal='end' className={classes.grow}>
-              {user.token ? <UserBar/>
-              : <>
-                  <Button color='primary' onClick={openSigninModal}>
-                    <Typography variant='body2' color={'primary'} noWrap>
-                      {translate('connection.signin')}
-                    </Typography>
-                  </Button>
-                  <Button color="primary" onClick={openLoginModal}>
-                    <Typography variant='body2' color={'primary'} noWrap>
-                      {translate('connection.login')}
-                    </Typography>
-                  </Button>
-                  <LoginModal/>
-                </>
-              }
+              {user.token && <UserBar/>}
             </Row>
           </Row>
         </Toolbar>

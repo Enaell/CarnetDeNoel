@@ -3,18 +3,17 @@ import { Row } from '../common/Flexbox';
 import { UserType } from '../common/types';
 import { Route } from 'react-router-dom';
 import { NotebookPanel } from './NotebookPanel';
+import { useNoteBook } from './notebookHooks';
 
-export const NotebookPage = ({ 
-  user
-}: { 
-  user: UserType,
-}) => {
+export const NotebookPage = () => {
+  console.log('notebook pane')
+
   return(
       <Row horizontal='center'>
         <Route
           key={'notebook'}
           path={'/notebook/gifts'}
-          render={ props => <NotebookPanel {...props} user={user} />}
+          render={ props => <NotebookPanel {...props} />}
         />
       </Row>
     );

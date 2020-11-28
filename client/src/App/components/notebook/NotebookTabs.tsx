@@ -1,18 +1,25 @@
 import React from 'react';
 import { Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
-import { familyMembers } from '../common/utils';
-import tabBG from './ressources/bgtab.jpg'
+import { familyMembers, giftTypes } from '../common/utils';
+import tabBG from './ressources/bgtab.jpg';
+import banner from './ressources/banner.jpg';
+import { Column, Row } from '../common/Flexbox';
+import { GiftType, UserType } from '../common/types';
+import { GiftCard } from './GiftCard';
+import { useSelector } from 'react-redux';
+import { useNoteBook } from './notebookHooks';
 
 type TabPanelProps = {
-  children?: React.ReactNode;
+  gifts?: GiftType[],
+  isOwned: boolean,
   index: any;
   value: any;
-  classes: Record<"root" | "tabs" | "tabPanel", string>;
-} 
+  classes: Record<"tabs" | "tabPanel", string>;
+  createGift: (gift: GiftType) => void,
+  updateGift: (gift: GiftType) => void
+}
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, classes, ...other } = props;
-
+function TabPanel({gifts, isOwned, value, index, classes, updateGift, createGift, ...other }: TabPanelProps) {
   return (
     <div
       className={classes.tabPanel}
@@ -22,11 +29,10 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      <Row width='100%' wrap horizontal='space-around'>
+        {isOwned && <GiftCard isOwned={isOwned} creation createGift={createGift} updateGift={updateGift}/>}
+        {value === index && (gifts?.map(gift => <GiftCard isOwned={isOwned} key={gift.name} gift={gift} createGift={createGift} updateGift={updateGift}/>))}
+      </Row>
     </div>
   );
 }
@@ -39,16 +45,17 @@ function a11yProps(index: any) {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
+  notebook: {
     flexGrow: 1,
-    // backgroundColor: theme.palette.primary.main,
     display: 'flex',
     height: '100%',
-    maxHeight: 'calc(100vh - 400px)',
+    maxHeight: 'calc(100vh - 200px)',
     width: '100%',
-    maxWidth: '1200px',
+    maxWidth: '1000px',
     boxShadow: '0 0 5px 5px #bed0c2',
-    borderRadius: '25px'
+    borderRadius: '25px',
+    backgroundColor: 'white',
+    zIndex:2
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -56,8 +63,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   tabPanel: {
     width: '100%',
     // backgroundImage: `url(${tabBG})`,
-    backgroundSize: '100% 100%',
-    borderRadius: '25px'
+    borderRadius: '25px',
+    overflow: 'auto'
+  },
+  banner: {
+    position: 'absolute',
+    width: '100%',
+    height: '300px',
+    backgroundImage: `url(${banner})`,
+    top: 0,
+    backgroundSize: '100% 100%'
   }
 }));
 
@@ -69,20 +84,41 @@ export const NotebookTabs = () => {
     setValue(newValue);
   };
 
-  return (
-    <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        {familyMembers.map((member, index) => <Tab key={member} label={`${member}`} {...a11yProps(index)}/> )}
-      </Tabs>
+  const {giftsByPerson, createGift, updateGift} = useNoteBook();
 
-      {familyMembers.map((member, index) => <TabPanel classes={classes} key={member} value={value} index={index} {...a11yProps(index)}> {`PANEL ${index} ${member}`} </TabPanel> )}
-    </div>
+  const userName = useSelector((state: any) => state.user.username)
+
+  return (
+    <>
+      <div className={classes.banner} />
+      <div className={classes.notebook}>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          className={classes.tabs}
+        >
+          {familyMembers.map((member, index) => <Tab key={member} label={`${member}`} {...a11yProps(index)}/> )}
+        </Tabs>
+
+        {familyMembers.map((member, index) => {
+          console.log(member);
+          return(
+          <TabPanel
+            isOwned={userName === member}
+            gifts={giftsByPerson ? giftsByPerson[member] : []}
+            classes={classes}
+            key={member}
+            value={value}
+            index={index}
+            createGift={createGift}
+            updateGift={updateGift}
+            {...a11yProps(index)}
+          />) }
+        )}
+      </div>
+    </>
   );
 }

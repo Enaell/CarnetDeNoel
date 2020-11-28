@@ -1,4 +1,6 @@
-export const types= ['Livre', 'Technologie', 'Cuisine', 'Vetement', 'Jeux'];
+import { giftKind } from "./types";
+
+export const giftTypes= ['other', 'book', 'boardgame', 'videogame', 'cooking', 'cloth', 'jewel'] as giftKind[];
 
 export const visibilities= ['loggedin', 'owner'];
 

@@ -64,9 +64,9 @@ const UserBar = ({ user, onLogout, classes }) => {
           aria-owns={isMenuOpen ? 'material-appbar' : undefined}
           aria-haspopup="true"
           onClick={handleProfileMenuOpen}
-          color="inherit"
+          style={{color: 'white'}}
         >
-          <AccountCircle />
+          <AccountCircle style={{color: 'white'}} />
         </IconButton>
         {LogMenu}
       </div>
