@@ -2,7 +2,9 @@ import React from 'react';
 import { Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
 import { familyMembers, giftTypes } from '../common/utils';
 import tabBG from './ressources/bgtab.jpg';
-import banner from './ressources/banner.jpg';
+import banner from './ressources/baniereNoel.jpg';
+import border from './ressources/borderNoel.jpg';
+
 import { Column, Row } from '../common/Flexbox';
 import { GiftType, UserType } from '../common/types';
 import { GiftCard } from './GiftCard';
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     boxShadow: '0 0 5px 5px #bed0c2',
     borderRadius: '25px',
     backgroundColor: 'white',
-    zIndex:2
+    zIndex:2,
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
@@ -69,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) => ({
   banner: {
     position: 'absolute',
     width: '100%',
-    height: '300px',
-    backgroundImage: `url(${banner})`,
+    height: '100vh',
+    backgroundImage: `url(${border})`,
     top: 0,
     backgroundSize: '100% 100%'
   }

@@ -11,8 +11,6 @@ export function useNoteBook() {
   
   useEffect(() => {
     giftApi.getAllGifts(user?.token).then(gifts => {
-      console.log('________________________________')
-      console.log(gifts)
       setGiftsByPerson(gifts)
     });
     // const g = {
@@ -38,7 +36,6 @@ export function useNoteBook() {
     if (user.token)
     {
       const res = await giftApi.createGift(newGift, user.token);
-      console.log(res);
       if (res.success)
       {
         const gift = {...newGift, id: res.message.gifts.insertedIds[0]}

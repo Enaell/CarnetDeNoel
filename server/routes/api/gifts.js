@@ -56,11 +56,8 @@ router.patch('/:giftId', auth.required, async (req, res, next) => {
 
         // if (id !== giftId && !(role === ROLES.Admin))
         //     return res.status(401).send({status: 401, message: "User is not allowed to modify other's gift"});
-        
             
         const giftUpdates = formatter.formatGiftUpdates(gift);
-
-        console.log(giftUpdates);
 
         const w = await Gifts.findByIdAndUpdate(giftId, giftUpdates, {new: true})
         return res.status(200).send({status:200, message: w})

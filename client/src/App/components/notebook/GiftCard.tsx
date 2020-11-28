@@ -11,7 +11,6 @@ import giftPict from './ressources/gifts.jpg';
 import bookPict from './ressources/book.jpeg';
 import { Autocomplete } from '@material-ui/lab';
 import { giftTypes } from '../common/utils';
-import { giftApi } from '../../apiClient/ApiClient';
 
 function getPictureByType(giftType: giftKind | undefined) {
   switch (giftType) {
@@ -71,7 +70,10 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
             value={newGift?.types ? newGift?.types[0]: 'other'}
             filterSelectedOptions
             disableCloseOnSelect
-            onChange={(_event, values) => {setNewGift({...newGift, types: values ? [values as giftKind] : ['other']})}}
+            onChange={(_event, values) => {
+              setNewGift({...newGift, types: values ? [values as giftKind] : ['other']});
+              setPictureInfo(getPictureByType(values ? values as giftKind : 'other'));
+            }}
             renderInput={(params: any) => (
               <TextField
                 {...params}
@@ -148,9 +150,19 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
               <>
                 <Button>
                   <SaveAltOutlinedIcon 
-                    onClick={() => {
-                      creation ? createGift(newGift) : updateGift(newGift);
-                      setOnModify(false)
+                    onClick={async () => {
+                      if (creation) {
+                        createGift(newGift);
+                        setNewGift({
+                          name: '',
+                          price: {average: 0, max: 0, min: 0},
+                          types:['other']
+                        })
+                      }
+                      else {                        
+                        updateGift(newGift);
+                        setOnModify(false)
+                      }
                     }}
                     color='action'
                     titleAccess={'Save'}

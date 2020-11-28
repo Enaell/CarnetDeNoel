@@ -11,7 +11,6 @@ import { useNoteBook } from './notebookHooks';
 
 export const NotebookPanel = ({...props}) => {
   
-  console.log('notebook pane')
   return (
     <Column height='100vh' width='100%' horizontal='center' vertical='space-around'>
       <NotebookTabs />

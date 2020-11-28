@@ -38,21 +38,22 @@ export const SigninForm = ({
         fullWidth
       /> */}
       <Autocomplete
-          options={familyMembers}
-          getOptionLabel={(member: string) => member}
-          filterSelectedOptions
-          disableCloseOnSelect
-          onChange={(_event, value) => handleUserNameChange(value || '')}
-          renderInput={(params: any) => (
-            <TextField
-              {...params}
-              error = {usernameError}
-              variant="standard"
-              label={translate('connection.username')}
-              placeholder={translate('connection.usernameError')}
-            />
-          )}
-        />
+        fullWidth
+        options={familyMembers}
+        getOptionLabel={(member: string) => member}
+        filterSelectedOptions
+        disableCloseOnSelect
+        onChange={(_event, value) => handleUserNameChange(value || '')}
+        renderInput={(params: any) => (
+          <TextField
+            {...params}
+            error = {usernameError}
+            variant="standard"
+            label={translate('connection.username')}
+            placeholder={translate('connection.usernameError')}
+          />
+        )}
+      />
       <TextField
         error = {emailAddressError}
         helperText = {emailAddressError ? translate('connection.emailError') : null} 

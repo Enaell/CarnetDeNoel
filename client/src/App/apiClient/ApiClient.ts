@@ -16,8 +16,6 @@ export const giftApi = {
       method:"GET"
     })
     const json = await res.json();
-    console.log('_____________________________________');
-    console.log(json);
     return json as {[member: string]: GiftType[];};
   },
   createGift: async (gift: GiftType, token: string) => {
