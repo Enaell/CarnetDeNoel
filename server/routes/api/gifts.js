@@ -68,4 +68,19 @@ router.patch('/:giftId', auth.required, async (req, res, next) => {
     }
 });
 
+router.delete('/:giftId', auth.required, async (req, res, next) => {
+    try {
+        const { payload: { id, role } } = req;
+        const giftId = req.params.giftId;
+
+        await Gifts.findByIdAndDelete(giftId);
+        return res.status(200).send({status: 200, message: `wordList ${giftId} deleted`});
+    
+    } catch (error) {
+        console.log("Couldn't delete gift");
+        console.log(error);
+        return res.status(500).send({status: 500, message: error});
+    }
+})
+
 module.exports = router;

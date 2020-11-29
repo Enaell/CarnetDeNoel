@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 
 const UsersSchema = new Schema({
   username: {type: String, unique : true, required : true, dropDups: true },
-  email: {type: String, unique : true, required : true, dropDups: true } ,
   role: {type: String, default: ROLES.Customer},
   hash: String,
   salt: String,
@@ -29,7 +28,6 @@ UsersSchema.methods.generateJWT = function() {
 
   return jwt.sign({
     id: this._id,
-    email: this.email,
     role: this.role,
     exp: parseInt(expirationDate.getTime() / 1000, 10),
   }, 'secret');

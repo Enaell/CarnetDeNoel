@@ -9,10 +9,8 @@ import { Column, Row } from '../common/Flexbox';
 type LoginTabsType = {
     tabNumber: number,
     handleTabChange: any,
-    handleEmailChange: any,
     handlePasswordChange: any,
     passwordError: any,
-    emailAddressError: any,
     handleUserNameChange: any,
     usernameError: any,
     visitorOption?: boolean,
@@ -37,10 +35,8 @@ const TabsWrapper = ({orientation, children, style={}}: {
 export const LoginTabs = ({
     tabNumber, 
     handleTabChange, 
-    handleEmailChange, 
     handlePasswordChange, 
     passwordError, 
-    emailAddressError, 
     usernameError, 
     handleUserNameChange,
     orientation = 'horizontal',
@@ -65,20 +61,18 @@ export const LoginTabs = ({
             <Column vertical='space-around' style={{width: orientation === 'vertical' ? 'calc(100% - 160px)': 'inherit', padding: '0 20px'}}>
                 {tabNumber === 0 &&
                 <SigninForm
-                    handleEmailChange = {handleEmailChange} 
                     handleUserNameChange = {handleUserNameChange} 
                     handlePasswordChange = {handlePasswordChange}
                     passwordError = {passwordError}
-                    emailAddressError = {emailAddressError}
                     usernameError = {usernameError}
                 />
                 }
                 {tabNumber === 1 && 
                 <LoginForm 
-                    handleEmailChange = {handleEmailChange} 
+                    handleUserNameChange = {handleUserNameChange} 
                     handlePasswordChange = {handlePasswordChange}
                     passwordError = {passwordError}
-                    emailAddressError = {emailAddressError}
+                    usernameError = {usernameError}
                 />
                 }
                 {children}
