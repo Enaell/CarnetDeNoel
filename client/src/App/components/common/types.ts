@@ -10,7 +10,7 @@ export type RoleType = 'Admin' | 'Customer';
 
 export type VisibilityType = 'loggedin' | 'owner' ;
 
-export type giftKind = 'other' | 'book' | 'boardgame' | 'videogame' | 'cooking' | 'cloth' | 'jewel';
+export type giftKind = 'other' | 'book' | 'boardgame' | 'videogame' | 'cooking' | 'cloth' | 'jewel' | 'game';
 
 export type GiftType= {
     id?: string,

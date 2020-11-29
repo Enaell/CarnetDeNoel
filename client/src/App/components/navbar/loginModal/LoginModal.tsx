@@ -18,19 +18,13 @@ type LoginModalType = {
 const LoginModal = ({onLogin, onSignin, closeModal, open, tabNumber, changeTabNumber} : LoginModalType) => {
 
   const [username, setUsername] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
 
   const [usernameError, setUsernameError] = useState(false);
-  const [emailAddressError, setEmailAddressError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
   function handleUserNameChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
     setUsername(event.target.value);
-  }
-
-  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
-    setEmailAddress(event.target.value);
   }
 
   function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
@@ -41,31 +35,29 @@ const LoginModal = ({onLogin, onSignin, closeModal, open, tabNumber, changeTabNu
 
     const usError = !username;
     const pError =  !password;
-    const eaError = !(emailAddress && emailAddress.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i));
 
     setUsernameError(usError);
     setPasswordError(pError);
-    setEmailAddressError(eaError);
 
-    if (!(usError || pError || eaError))
-      onSignin(username, emailAddress, password);
+    if (!(usError || pError))
+      onSignin(username, password);
   }
 
   const onLoginClick = () => {
 
     const pError =  !password;
-    const eaError = !(emailAddress && emailAddress.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i));
-    setEmailAddressError(eaError);
+    const usError = !username;
+
+    setUsernameError(usError);
     setPasswordError(pError);
 
-    if (!(pError || eaError))
-      onLogin(emailAddress, password);
+    if (!(pError || usernameError))
+      onLogin(username, password);
   }
 
   function handleTabChange(event: any, newValue: number){
     setUsernameError(false);
     setPasswordError(false);
-    setEmailAddressError(false);
     changeTabNumber(newValue);
   }
 
@@ -78,10 +70,8 @@ const LoginModal = ({onLogin, onSignin, closeModal, open, tabNumber, changeTabNu
             <LoginTabs
                 tabNumber={tabNumber}
                 handleTabChange={handleTabChange} 
-                handleEmailChange={handleEmailChange} 
                 handlePasswordChange={handlePasswordChange}
                 passwordError={passwordError} 
-                emailAddressError={emailAddressError} 
                 usernameError={usernameError}
                 handleUserNameChange={handleUserNameChange}
             />

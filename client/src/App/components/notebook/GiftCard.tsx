@@ -1,30 +1,43 @@
 import React, { useState } from 'react'
 import { Column, Row } from '../common/Flexbox'
-import { Card, Typography, CardContent, CardMedia, IconButton, TextField, Button } from '@material-ui/core'
+import { Card, Typography, CardContent, CardMedia, IconButton, TextField, Button, colors } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import SaveAltOutlinedIcon from '@material-ui/icons/SaveAltOutlined';
 import CreateOutlinedIcon from '@material-ui/icons/CreateOutlined';
-import translate from 'counterpart';
 import { giftKind, GiftType } from '../common/types';
 import giftPict from './ressources/gifts.jpg';
+import boardgamePict from './ressources/boardGame.jpg';
+import clothPict from './ressources/cloths.jpg';
+import cookingPict from './ressources/cooking.jpg';
+import gamePict from './ressources/game.jpg';
 import bookPict from './ressources/book.jpeg';
+import jewelPict from './ressources/jewel.jpg';
+import videoGamePict from './ressources/videoGames.jpeg';
+
 import { Autocomplete } from '@material-ui/lab';
 import { giftTypes } from '../common/utils';
 
 function getPictureByType(giftType: giftKind | undefined) {
   switch (giftType) {
     case 'book': return {pict: bookPict, name: 'Livre'};
+    case 'boardgame': return {pict: boardgamePict, name: 'Jeu de société'};
+    case 'game': return {pict: gamePict, name: 'Jouet'};
+    case 'cloth': return {pict: clothPict, name: 'Vêtement'};
+    case 'cooking': return {pict: cookingPict, name: 'Cuisine'};
+    case 'jewel': return {pict: jewelPict, name: 'Bijoux'};
+    case 'videogame': return {pict: videoGamePict, name: 'Jeux vidéo'};
     default: return {pict: giftPict, name: ''};
   }
 }
 
-export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGift}: {
+export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGift, deleteGift}: {
   gift?: GiftType,
   isOwned: boolean,
   creation?: boolean,
   updateGift: (gift: GiftType) => void,
-  createGift: (gift: GiftType) => void
+  createGift: (gift: GiftType) => void,
+  deleteGift: (gift: GiftType) => void
 }) => {
 
   const [onHover, setOnHover] = useState(false);
@@ -63,7 +76,7 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
           }}
           >
           { onModify && <Autocomplete
-            style={{backgroundColor: '#00ff0088', height: '154px', width: '150px', borderRadius: '50%'}}
+            style={{backgroundColor: '#e34836', height: '154px', width: '150px', borderRadius: '50%'}}
             limitTags={8}
             options={giftTypes}
             getOptionLabel={(gKind: giftKind) => getPictureByType(gKind).name}
@@ -81,14 +94,10 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
                 label={'Type'}
                 placeholder={'Type'}
                 style={{margin: '20px', width: '110px'}}
-                error
               />
             )}
           />
           }
-          {/* <Typography variant='h4' noWrap={false} color='primary' style={{backgroundColor: '#00000088', padding: '5px 5px 5px 5px'}}>
-            {pictureInfo.name}
-            </Typography> */}
         </Row>
         <Card
           elevation={onHover ? 5 : 1}
@@ -169,7 +178,7 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
                   />
                 </Button>
                 <Button>
-                  <DeleteOutlinedIcon onClick={() => {}}  color='action' titleAccess={'Delete'}/>
+                  <DeleteOutlinedIcon onClick={() => {if(gift) deleteGift(gift); setOnModify(false)}}  color='action' titleAccess={'Delete'}/>
                 </Button>
                 <Button>
                   <CloseIcon onClick={() => {setNewGift(gift || {} as GiftType); setOnModify(false)}} color='action' titleAccess={'Cancel'}/>

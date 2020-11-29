@@ -2,33 +2,41 @@ import React from 'react';
 import { Column } from '../common/Flexbox';
 import TextField from '@material-ui/core/TextField';
 import translate from 'counterpart';
+import { Autocomplete } from '@material-ui/lab';
+import { familyMembers } from '../common/utils';
 
 type LoginFormType = {
-  handleEmailChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, 
+  handleUserNameChange: (value: string) => void, 
   handlePasswordChange: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void, 
   passwordError: boolean, 
-  emailAddressError: boolean
+  usernameError: boolean
 }
 
 export const LoginForm = ({
-  handleEmailChange, 
+  handleUserNameChange, 
   handlePasswordChange, 
   passwordError, 
-  emailAddressError
+  usernameError
 }: LoginFormType) => {
   return(
     <Column vertical={'space-between'} horizontal={'center'} style={{minWidth: '75%'}}>
-        <TextField
-          error = { emailAddressError }
-          helperText = { emailAddressError ? translate('connection.emailInvalidError') : null } 
-          required
-          margin="dense"
-          id="email"
-          label={translate('connection.email')}
-          type="email"
-          onChange={handleEmailChange}
-          fullWidth
-        />
+      <Autocomplete
+        fullWidth
+        options={familyMembers}
+        getOptionLabel={(member: string) => member}
+        filterSelectedOptions
+        disableCloseOnSelect
+        onChange={(_event, value) => handleUserNameChange(value || '')}
+        renderInput={(params: any) => (
+          <TextField
+            {...params}
+            error = {usernameError}
+            variant="standard"
+            label={translate('connection.username')}
+            placeholder={translate('connection.usernameError')}
+          />
+        )}
+      />
         <TextField
           error = {passwordError}
           helperText = {passwordError ? translate('connection.passwordError') : null} 

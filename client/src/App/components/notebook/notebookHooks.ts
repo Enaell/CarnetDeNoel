@@ -52,5 +52,11 @@ export function useNoteBook() {
       await giftApi.updateGift(updatedGift, user.token);
   }
 
-  return {giftsByPerson, createGift, updateGift};
+  async function  deleteGift(deletedGift: GiftType) {
+    if (user.token && deletedGift.id)
+      giftApi.deleteGift(deletedGift, user.token);
+    setGiftsByPerson({...giftsByPerson, [user.username]: giftsByPerson[user.username].filter(gift => gift.name !== deletedGift.name)});
+  }
+
+  return {giftsByPerson, createGift, updateGift, deleteGift};
 }
