@@ -105,8 +105,9 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
         >
           <CardContent style={{paddingLeft: '95px'}} >
           <Row width={'100%'} height={'100%'} horizontal='space-between'>
-            <Column height={'110px'}>
+            <Column width={'100%'} height={'110px'}>
               <TextField
+                fullWidth
                 InputProps={onModify ? undefined : {
                   readOnly: true,
                 }}
