@@ -8,14 +8,7 @@ const Users = mongoose.model('Users');
 //POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
   const { body: { user } } = req;  
-  if(!user.email) {
-    return res.status(422).json({
-      errors: {
-        email: 'is required',
-      },
-    });
-  }
-
+ 
   if(!user.password) {
     return res.status(422).json({
       errors: {
@@ -40,14 +33,6 @@ router.post('/', auth.optional, (req, res, next) => {
 //POST login route (optional, everyone has access)
 router.post('/login', auth.optional, (req, res, next) => {
   const { body: { user } } = req;
-
-  if(!user.email) {
-    return res.status(422).json({
-      errors: {
-        email: 'is required',
-      },
-    });
-  }
 
   if(!user.password) {
     return res.status(422).json({
@@ -115,7 +100,6 @@ router.patch('/', auth.required, async (req, res, next) => {
   const { payload, body: updates} = req;
 
   delete updates.username;
-  delete updates.email;
   delete updates.role;
   delete updates.userBoard;
 

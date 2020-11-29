@@ -11,8 +11,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
   return({
-    onLogin:(emailAddress, password) => {
-      const loginBody = { user: { "email":emailAddress,"password":password }};
+    onLogin:(username, password) => {
+      const loginBody = { user: { "username":username,"password":password }};
       return fetch("http://localhost:5000/api/users/login",
         {
             headers: {
@@ -41,11 +41,9 @@ function mapDispatchToProps(dispatch){
           dispatch({type: 'TOGGLE_NAV_SNACKBAR'})
         });
     },
-    onSignin:(username, emailAddress, password, language, targetLanguage) => {
+    onSignin:(username, password, language, targetLanguage) => {
       const signinBody =  {
         'user': {
-          "name": username,
-          "email": emailAddress,
           "username": username,
           "password": password,
           "language": language,

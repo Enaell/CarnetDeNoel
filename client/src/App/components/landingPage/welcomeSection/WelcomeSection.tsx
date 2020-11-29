@@ -11,8 +11,8 @@ import { useDispatch } from 'react-redux';
 import { LoadingButton } from '../../common/Buttons';
 
 type WelcomeSectionType = {
-  onLogin: (emailAddress: string, password: string) => Promise<void>, 
-  onSignin: (username: string, emailAddress: string, password: string) => Promise<void>,
+  onLogin: (username: string, password: string) => Promise<void>, 
+  onSignin: (username: string, password: string) => Promise<void>,
   tabNumber: number,
   changeTabNumber: (num: number) => void,
   position?: 'absolute' | 'relative'
@@ -30,20 +30,14 @@ export const WelcomeSection = ({
   let history = useHistory();
 
   const [username, setUsername] = useState("");
-  const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
 
   const [usernameError, setUsernameError] = useState(false);
-  const [emailAddressError, setEmailAddressError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
 
   function handleUserNameChange(value: string){
     setUsername(value);
-  }
-
-  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
-    setEmailAddress(event.target.value);
   }
 
   // function handlePasswordChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
@@ -54,28 +48,26 @@ export const WelcomeSection = ({
   const onSigninClick = async() => {
     const usError = !username;
     const pError =  !password;
-    const eaError = !(emailAddress && emailAddress.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i));
 
     setUsernameError(usError);
     setPasswordError(pError);
-    setEmailAddressError(eaError);
 
-    if (!(usError || pError || eaError))
+    if (!(usError || pError))
     {
-      await onSignin(username, emailAddress, password);
+      await onSignin(username, password);
       history.replace('/notebook/gifts')
     }
   };
 
   const onLoginClick = async() => {
     const pError =  !password;
-    const eaError = !(emailAddress && emailAddress.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i));
-    setEmailAddressError(eaError);
+    const usError = !username;
+    setUsernameError(usError);
     setPasswordError(pError);
 
-    if (!(pError || eaError)) {
+    if (!(pError || usError)) {
     {
-      await onLogin(emailAddress, password);
+      await onLogin(username, password);
       history.replace('/notebook/gifts');}
     }
   };
@@ -83,7 +75,6 @@ export const WelcomeSection = ({
   function handleTabChange(_event: any, newValue: number){
     setUsernameError(false);
     setPasswordError(false);
-    setEmailAddressError(false);
     changeTabNumber(newValue);
   }
 
@@ -102,10 +93,8 @@ export const WelcomeSection = ({
                 <LoginTabs
                   tabNumber={tabNumber}
                   handleTabChange={handleTabChange} 
-                  handleEmailChange={handleEmailChange} 
                   handlePasswordChange={handlePasswordChange}
                   passwordError={passwordError} 
-                  emailAddressError={emailAddressError} 
                   usernameError={usernameError}
                   handleUserNameChange={handleUserNameChange}
                   visitorOption
