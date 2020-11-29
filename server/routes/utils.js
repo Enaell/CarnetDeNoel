@@ -7,6 +7,7 @@ const formatter = {
             owner: item.owner.username,
             name: item.name,
             price: item.price,
+            reservations: item.reservations,
             types: item.types
           }]
         : [{
@@ -14,6 +15,7 @@ const formatter = {
           owner: item.owner.username,
           name: item.name,
           price: item.price,
+          reservations: item.reservations,
           types: item.types
         }]}
       }, {})

@@ -43,7 +43,6 @@ export const LoginTabs = ({
     style = {},
     children
 } : LoginTabsType) => {
-    console.log(orientation)
     return (
         <TabsWrapper orientation={orientation} style={style}>
             <Tabs

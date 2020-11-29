@@ -10,19 +10,22 @@ import { GiftType, UserType } from '../common/types';
 import { GiftCard } from './GiftCard';
 import { useSelector } from 'react-redux';
 import { useNoteBook } from './notebookHooks';
+import { ResevationPanel } from './ReservationPanel';
 
 type TabPanelProps = {
   gifts?: GiftType[],
+  userName: string,
   isOwned: boolean,
   index: any;
   value: any;
   classes: Record<"tabs" | "tabPanel", string>;
-  createGift: (gift: GiftType) => void,
-  updateGift: (gift: GiftType) => void,
-  deleteGift: (gift: GiftType) => void
+  createGift: (gift: GiftType) => Promise<void>,
+  updateGift: (gift: GiftType) => Promise<void>,
+  deleteGift: (gift: GiftType) => Promise<void>,
+  onReserve: (gift: GiftType) => Promise<void>
 }
 
-function TabPanel({gifts, isOwned, value, index, classes, updateGift, createGift, deleteGift, ...other }: TabPanelProps) {
+function TabPanel({gifts, userName, isOwned, value, index, classes, updateGift, createGift, deleteGift, onReserve, ...other }: TabPanelProps) {
   return (
     <div
       className={classes.tabPanel}
@@ -32,10 +35,16 @@ function TabPanel({gifts, isOwned, value, index, classes, updateGift, createGift
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
     >
-      <Row width='100%' wrap horizontal='space-around'>
+      <Column width='100%' horizontal='center'>
         {isOwned && <GiftCard isOwned={isOwned} creation createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>}
-        {value === index && (gifts?.map(gift => <GiftCard isOwned={isOwned} key={gift.name} gift={gift} createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>))}
-      </Row>
+        {value === index && (gifts?.map((gift, i) => (
+          <Row key={`${gift.id}${i}`}>
+            <GiftCard isOwned={isOwned} key={gift.name} gift={gift} createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>
+            { !isOwned && <ResevationPanel userName={userName} gift={gift} onReserve={onReserve}/>}
+          </Row>)
+          )
+        )}
+      </Column>
     </div>
   );
 }
@@ -87,7 +96,7 @@ export const NotebookTabs = () => {
     setValue(newValue);
   };
 
-  const {giftsByPerson, createGift, updateGift, deleteGift} = useNoteBook();
+  const {giftsByPerson, createGift, updateGift, deleteGift, onReserve} = useNoteBook();
 
   const userName = useSelector((state: any) => state.user.username)
 
@@ -107,10 +116,10 @@ export const NotebookTabs = () => {
         </Tabs>
 
         {familyMembers.map((member, index) => {
-          console.log(member);
           return(
           <TabPanel
             isOwned={userName === member}
+            userName={userName}
             gifts={giftsByPerson ? giftsByPerson[member] : []}
             classes={classes}
             key={member}
@@ -119,6 +128,7 @@ export const NotebookTabs = () => {
             createGift={createGift}
             updateGift={updateGift}
             deleteGift={deleteGift}
+            onReserve={onReserve}
             {...a11yProps(index)}
           />) }
         )}
