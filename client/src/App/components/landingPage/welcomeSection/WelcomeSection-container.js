@@ -13,7 +13,7 @@ function mapDispatchToProps(dispatch){
   return({
     onLogin:(username, password) => {
       const loginBody = { user: { "username":username,"password":password }};
-      return fetch("http://localhost:5000/api/users/login",
+      return fetch("http://46.101.130.5:5000/api/users/login",
         {
             headers: {
               'Accept': 'application/json',
@@ -54,7 +54,7 @@ function mapDispatchToProps(dispatch){
           ]
         }
       };
-      return fetch("http://localhost:5000/api/users",
+      return fetch("http://46.101.130.5:5000/api/users",
         {
             headers: {
               'Accept': 'application/json',
