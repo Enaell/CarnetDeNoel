@@ -133,7 +133,7 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
                   }}
                   style={{width: '100px'}}
                   type='number'
-                  label='Prix moyen'
+                  label='Prix Min'
                   value={newGift.price?.min}
                   onChange={(e: React.ChangeEvent<{ value: unknown }>)=> setNewGift({...newGift, price: { ...newGift.price, min: e.target.value as number}})}
                 />}
