@@ -66,7 +66,7 @@ export const giftApi = {
     console.log('api client gift delete gift');
     console.log(gift);
     try {
-      const res = await fetch(`http://localhost:5000/api/gifts/${gift.id}`,{
+      const res = await fetch(`http://46.101.130.5:5000/api/gifts/${gift.id}`,{
         headers: {
           'Authorization': `Token ${token}`,
           'Accept': 'application/json',
@@ -83,22 +83,5 @@ export const giftApi = {
       console.log(error);
       return {success: false, message: error.message}
     }
-  }
-}
-
-export const mailerApi = {
-  sendContactEmail: async (name: string, email: string, subject: string, comments: string) => {
-    console.log('MAIL API !')
-    const res = await fetch('http://localhost:5050/email/contact',
-      {
-        headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      method:"POST",
-      body: JSON.stringify({ name, email, subject, comments })
-    });
-    
-    return res.status;
   }
 }

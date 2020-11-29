@@ -90,7 +90,7 @@ const changeLoginModalTab = (state, tabNumber) => ({ ...state, tab: tabNumber })
 
 const initialLoginModalState = {
   open: false,
-  tab: 0,
+  tab: 1,
 }
 
 const loginModalReducer = (state = initialLoginModalState, action) => {
