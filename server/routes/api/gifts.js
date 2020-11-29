@@ -73,8 +73,8 @@ router.delete('/:giftId', auth.required, async (req, res, next) => {
         const { payload: { id, role } } = req;
         const giftId = req.params.giftId;
 
-        await WordLists.findByIdAndDelete(wordListId);
-        return res.status(200).send({status: 200, message: `wordList ${wordListId} deleted`});
+        await Gifts.findByIdAndDelete(giftId);
+        return res.status(200).send({status: 200, message: `wordList ${giftId} deleted`});
     
     } catch (error) {
         console.log("Couldn't delete gift");

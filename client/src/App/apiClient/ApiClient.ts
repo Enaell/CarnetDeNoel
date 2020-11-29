@@ -72,7 +72,7 @@ export const giftApi = {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        method:"PATCH",
+        method:"DELETE",
         body: JSON.stringify({
           gift
         })
