@@ -62,6 +62,28 @@ export const giftApi = {
       return {success: false, message: error.message}
     }
   },
+  deleteGift: async (gift: GiftType, token: string) => {
+    console.log('api client gift delete gift');
+    console.log(gift);
+    try {
+      const res = await fetch(`http://localhost:5000/api/gifts/${gift.id}`,{
+        headers: {
+          'Authorization': `Token ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method:"PATCH",
+        body: JSON.stringify({
+          gift
+        })
+      });
+      const json = await res.json();
+      return {success: true, message: json};
+    } catch (error) {
+      console.log(error);
+      return {success: false, message: error.message}
+    }
+  }
 }
 
 export const mailerApi = {

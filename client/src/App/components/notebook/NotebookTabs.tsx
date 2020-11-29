@@ -18,10 +18,11 @@ type TabPanelProps = {
   value: any;
   classes: Record<"tabs" | "tabPanel", string>;
   createGift: (gift: GiftType) => void,
-  updateGift: (gift: GiftType) => void
+  updateGift: (gift: GiftType) => void,
+  deleteGift: (gift: GiftType) => void
 }
 
-function TabPanel({gifts, isOwned, value, index, classes, updateGift, createGift, ...other }: TabPanelProps) {
+function TabPanel({gifts, isOwned, value, index, classes, updateGift, createGift, deleteGift, ...other }: TabPanelProps) {
   return (
     <div
       className={classes.tabPanel}
@@ -32,8 +33,8 @@ function TabPanel({gifts, isOwned, value, index, classes, updateGift, createGift
       {...other}
     >
       <Row width='100%' wrap horizontal='space-around'>
-        {isOwned && <GiftCard isOwned={isOwned} creation createGift={createGift} updateGift={updateGift}/>}
-        {value === index && (gifts?.map(gift => <GiftCard isOwned={isOwned} key={gift.name} gift={gift} createGift={createGift} updateGift={updateGift}/>))}
+        {isOwned && <GiftCard isOwned={isOwned} creation createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>}
+        {value === index && (gifts?.map(gift => <GiftCard isOwned={isOwned} key={gift.name} gift={gift} createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>))}
       </Row>
     </div>
   );
@@ -86,7 +87,7 @@ export const NotebookTabs = () => {
     setValue(newValue);
   };
 
-  const {giftsByPerson, createGift, updateGift} = useNoteBook();
+  const {giftsByPerson, createGift, updateGift, deleteGift} = useNoteBook();
 
   const userName = useSelector((state: any) => state.user.username)
 
@@ -117,6 +118,7 @@ export const NotebookTabs = () => {
             index={index}
             createGift={createGift}
             updateGift={updateGift}
+            deleteGift={deleteGift}
             {...a11yProps(index)}
           />) }
         )}
