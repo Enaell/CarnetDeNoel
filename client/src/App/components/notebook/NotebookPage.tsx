@@ -6,7 +6,6 @@ import { NotebookPanel } from './NotebookPanel';
 import { useNoteBook } from './notebookHooks';
 
 export const NotebookPage = () => {
-  console.log('notebook pane')
 
   return(
       <Row horizontal='center'>

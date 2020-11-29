@@ -1,6 +1,6 @@
 import { giftKind } from "./types";
 
-export const giftTypes= ['other', 'book', 'boardgame', 'videogame', 'cooking', 'cloth', 'jewel', 'game'] as giftKind[];
+export const giftTypes= ['other', 'book', 'boardgame', 'videogame', 'cooking', 'cloth', 'jewel', 'game', 'techno'] as giftKind[];
 
 export const visibilities= ['loggedin', 'owner'];
 

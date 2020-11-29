@@ -10,7 +10,7 @@ export type RoleType = 'Admin' | 'Customer';
 
 export type VisibilityType = 'loggedin' | 'owner' ;
 
-export type giftKind = 'other' | 'book' | 'boardgame' | 'videogame' | 'cooking' | 'cloth' | 'jewel' | 'game';
+export type giftKind = 'other' | 'book' | 'boardgame' | 'videogame' | 'cooking' | 'cloth' | 'jewel' | 'game' | 'techno';
 
 export type GiftType= {
     id?: string,
@@ -18,6 +18,7 @@ export type GiftType= {
     name?: string,
     types?: giftKind[],
     price?: {min?: number, max?: number, average?: number},
+    reservations?: {userName: string, price?: number}[]
     visibility?: VisibilityType, //(rank of visibility wanted by the card owner)  ---------- two last fields shown in case of owner wants to know on their lists
 }
 

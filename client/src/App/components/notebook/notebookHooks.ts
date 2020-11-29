@@ -52,11 +52,21 @@ export function useNoteBook() {
       await giftApi.updateGift(updatedGift, user.token);
   }
 
+  async function onReserve(giftToReserve: GiftType) {
+    if (giftToReserve.owner) {
+      const newGifts = giftsByPerson[giftToReserve.owner].map(gift => gift.id === giftToReserve.id ? giftToReserve : gift);
+      setGiftsByPerson({...giftsByPerson, [giftToReserve.owner]: newGifts})
+      if(user.token)
+        await giftApi.updateGift(giftToReserve, user.token);
+    }
+  }
+
+
   async function  deleteGift(deletedGift: GiftType) {
     if (user.token && deletedGift.id)
       giftApi.deleteGift(deletedGift, user.token);
     setGiftsByPerson({...giftsByPerson, [user.username]: giftsByPerson[user.username].filter(gift => gift.name !== deletedGift.name)});
   }
 
-  return {giftsByPerson, createGift, updateGift, deleteGift};
+  return {giftsByPerson, createGift, updateGift, deleteGift, onReserve};
 }
