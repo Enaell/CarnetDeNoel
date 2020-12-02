@@ -33,7 +33,7 @@ router.post('/', auth.required, async (req, res, next) => {
     const { body: { gifts } } = req;
     try {
         console.log(gifts)
-        if(!gifts || gifts.length || !gifts[0].name) 
+        if(!gifts || gifts.length === 0 || !gifts[0].name) 
             return res.status(500).send({status: 500, message: 'Gift must have name'});
 
         const finalGifts = gifts.map(gift => {
