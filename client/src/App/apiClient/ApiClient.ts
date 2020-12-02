@@ -21,6 +21,9 @@ export const giftApi = {
   createGift: async (gift: GiftType, token: string) => {
     console.log('api client gift CREATE gift');
     console.log(gift);
+    if (!gift.name)
+    return {success: false, message: 'gift has no name'};
+
     try {
       const res = await fetch(`http://46.101.130.5:5000/api/gifts/`,{
         headers: {
@@ -44,6 +47,8 @@ export const giftApi = {
     console.log('api client gift update gift');
     console.log(gift);
     try {
+      if (!gift.name)
+       return {success: false, message: 'gift has no name'};
       const res = await fetch(`http://46.101.130.5:5000/api/gifts/${gift.id}`,{
         headers: {
           'Authorization': `Token ${token}`,
