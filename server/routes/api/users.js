@@ -53,7 +53,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 
       return res.json({user: user.toAuthJSON()})
       .catch((error) => {
-        res.status(500).json({ error });
+        return res.status(500).json({ error });
       });;
     }
     return status(400).info;

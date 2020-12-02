@@ -32,6 +32,10 @@ router.post('/', auth.required, async (req, res, next) => {
     const { payload: { id, role } } = req;
     const { body: { gifts } } = req;
     try {
+
+        if(!gifts || gifts.length || !gifts[0].name) 
+            return res.status(500).send({status: 500, message: 'Gift must have name'});
+
         const finalGifts = gifts.map(gift => {
             return new Gifts({
                 ...gift,
@@ -53,7 +57,9 @@ router.patch('/:giftId', auth.required, async (req, res, next) => {
         const { payload: { id, role } } = req;
         const { body: {gift} } = req;
         const giftId = req.params.giftId;
-
+        
+        if(!gift || !gift.name) 
+            return res.status(500).send({status: 500, message: 'Gift must have name'});
         // if (id !== giftId && !(role === ROLES.Admin))
         //     return res.status(401).send({status: 401, message: "User is not allowed to modify other's gift"});
             
