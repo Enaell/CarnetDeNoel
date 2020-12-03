@@ -4,7 +4,7 @@ const { VISIBILITY } = require('./utils');
 const { Schema } = mongoose;
 
 const GiftsSchema = new Schema({
-    owner: { type: Schema.Types.ObjectId, ref: 'Users', required: true },
+    owner: { type: String, required: true },
     name: { type: String, required: true },
     types: {type: [String], default: ['other']},
     price: {type: Object, default: {min: 0, max: 0, average: 0}},

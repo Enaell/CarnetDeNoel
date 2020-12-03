@@ -88,5 +88,23 @@ export const giftApi = {
       console.log(error);
       return {success: false, message: error.message}
     }
+  },
+  addCollection: async (collection: any, token: string) => {
+    try {
+      const res = await fetch(`http://46.101.130.5:5000/api/gifts/collection`,{
+        headers: {
+          'Authorization': `Token ${token}`,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method:"POST",
+        body: JSON.stringify({gifts: collection})
+      });
+      const json = await res.json();
+      return {success: true, message: json};
+    } catch (error) {
+      console.log(error);
+      return {success: false, message: error.message}
+    }
   }
-}
+ }

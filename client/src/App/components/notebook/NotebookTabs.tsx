@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
+import { Box, Button, makeStyles, Tab, Tabs, Theme, Typography } from '@material-ui/core';
 import { familyMembers, giftTypes } from '../common/utils';
 import tabBG from './ressources/bgtab.jpg';
 import banner from './ressources/baniereNoel.jpg';
@@ -96,7 +96,7 @@ export const NotebookTabs = () => {
     setValue(newValue);
   };
 
-  const {giftsByPerson, createGift, updateGift, deleteGift, onReserve} = useNoteBook();
+  const {giftsByPerson, createGift, updateGift, deleteGift, onReserve, restoreCollection} = useNoteBook();
 
   const userName = useSelector((state: any) => state.user.username)
 
@@ -104,6 +104,7 @@ export const NotebookTabs = () => {
     <>
       <div className={classes.banner} />
       <div className={classes.notebook}>
+        {userName === 'Aurelien' && <Button onClick={()=> restoreCollection()}>COLLECTION</Button>}
         <Tabs
           orientation="vertical"
           variant="scrollable"
