@@ -43,7 +43,7 @@ router.post('/', auth.required, async (req, res, next) => {
             })
         })
         const data = await Gifts.collection.insertMany(finalGifts);
-        res.json({gifts: data})
+        return res.json({gifts: data})
     }
     catch(error) {
         console.log("Couldn't save Gifts");
