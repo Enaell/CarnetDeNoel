@@ -23,10 +23,10 @@ router.post('/', auth.optional, (req, res, next) => {
   return finalUser.save()
     .then(frontUser => {
       frontUser.token = frontUser.generateJWT();
-      res.json({ user: frontUser.toAuthJSON() })
+      return res.json({ user: frontUser.toAuthJSON() })
     })
     .catch((error) => {
-      res.status(500).json({ error });
+      return res.status(500).json({ error });
     });
 });
 
@@ -44,6 +44,8 @@ router.post('/login', auth.optional, (req, res, next) => {
 
   return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
     if(err) {
+      console.log('next err')
+      console.log(err);
       return next(err);
     }
 
@@ -53,7 +55,7 @@ router.post('/login', auth.optional, (req, res, next) => {
 
       return res.json({user: user.toAuthJSON()})
       .catch((error) => {
-        res.status(500).json({ error });
+        return res.status(500).json({ error });
       });;
     }
     return status(400).info;
@@ -105,11 +107,11 @@ router.patch('/', auth.required, async (req, res, next) => {
 
   try {
     const user = await Users.findByIdAndUpdate(payload.id, updates);
-    res.json({ user });
+    return res.json({ user });
   }
   catch( error ){
     console.log(error);
-    res.status(500).json({ error });
+    return res.status(500).json({ error });
   }
 });
 
