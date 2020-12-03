@@ -104,7 +104,7 @@ export const NotebookTabs = () => {
     <>
       <div className={classes.banner} />
       <div className={classes.notebook}>
-        {userName === 'Aurelien' && <Button onClick={()=> restoreCollection()}>COLLECTION</Button>}
+        {/* {userName === 'Aurelien' && <Button onClick={()=> restoreCollection()}>COLLECTION</Button>} */}
         <Tabs
           orientation="vertical"
           variant="scrollable"
