@@ -11,7 +11,7 @@ router.get('/', auth.optional, (req, res, next) => {
 
     if (payload && payload.id && payload.role === ROLES.Admin)
     {
-        Gifts.find({...language}).populate('owner')
+        Gifts.find({...language})
         .then(gifts => {
             console.log('API Gifts get all Gifts as ADMIN or MODERATOR')
             console.log(gifts);
@@ -20,26 +20,57 @@ router.get('/', auth.optional, (req, res, next) => {
     }
     else if (payload && payload.id)
     {
-        Gifts.find({$or:[{ visibility: VISIBILITY.LoggedIn }, {visibility: VISIBILITY.Owner }] }).populate('owner')
-        .then(gifts => {
-            console.log('API Gifts get all Gifts as CUSTOMER')
-            return res.json(formatter.formatGiftByMember(gifts))
-         })
+        try {
+            Gifts.find({$or:[{ visibility: VISIBILITY.LoggedIn }, {visibility: VISIBILITY.Owner }] })
+            .then(gifts => {
+                console.log('API Gifts get all Gifts as CUSTOMER');
+                return res.json(formatter.formatGiftByMember(gifts))
+            })
+        } catch (error){
+            console.log(error);
+            return res.status(500).send({status: 500, message: 'Couldnt get gifts'});
+        }
     }
+});
+
+router.post('/collection', auth.required, async (req, res, next) => {
+    const { payload: { id, role } } = req;
+    const { body: { gifts } } = req;
+
+    const fGifts = Object.keys(gifts).map(key => gifts[key]).flat()
+    console.log(fGifts);
+
+    try {
+        const finalGifts = fGifts.map(gift => {
+            return new Gifts({
+                ...gift,
+            })
+        })
+        const data = await Gifts.collection.insertMany(finalGifts);
+        return res.json({gifts: data})
+    }
+    catch(error) {
+        console.log("Couldn't save Gifts");
+        console.log(error);
+        return res.sendStatus(400);
+    };
 });
 
 router.post('/', auth.required, async (req, res, next) => {
     const { payload: { id, role } } = req;
     const { body: { gifts } } = req;
+
     try {
         console.log(gifts)
+        const user = await Users.findById(id);        
+
         if(!gifts || gifts.length === 0 || !gifts[0].name) 
             return res.status(500).send({status: 500, message: 'Gift must have name'});
 
         const finalGifts = gifts.map(gift => {
             return new Gifts({
                 ...gift,
-                owner: id,
+                owner: user.username,
             })
         })
         const data = await Gifts.collection.insertMany(finalGifts);

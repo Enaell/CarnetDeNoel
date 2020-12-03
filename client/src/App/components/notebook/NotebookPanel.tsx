@@ -5,7 +5,6 @@ import { GiftType, UserType } from '../common/types';
 import { familyMembers } from '../common/utils';
 import { NotebookTabs } from './NotebookTabs';
 import image from '../landingPage/ressources/landing.jpg'
-import { useNoteBook } from './notebookHooks';
 
 
 

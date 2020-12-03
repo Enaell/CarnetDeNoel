@@ -1,10 +1,10 @@
 const formatter = {
-    formatGiftByMember: (gifts) => {
-      return gifts.reduce((obj, item) => {
+  formatGiftByMember: (gifts) => {
+    return gifts.reduce((obj, item) => {
         return { ...obj,
-          [item.owner.username]: obj[item.owner.username] ? [...obj[item.owner.username], {
+          [item.owner]: obj[item.owner] ? [...obj[item.owner], {
             id: item._id,
-            owner: item.owner.username,
+            owner: item.owner,
             name: item.name,
             price: item.price,
             reservations: item.reservations,
@@ -12,23 +12,23 @@ const formatter = {
           }]
         : [{
           id: item._id,
-          owner: item.owner.username,
+          owner: item.owner,
           name: item.name,
           price: item.price,
           reservations: item.reservations,
           types: item.types
-        }]}
-      }, {})
-      
-    },
-    formatGiftUpdates: (gift) => {
-      let giftUpdates = {
-        ...gift,
-      };
-      delete giftUpdates.owner;
-      delete giftUpdates.id;
-      return giftUpdates;
-    }
+        }]}   
+    }, {})
+    
+  },
+  formatGiftUpdates: (gift) => {
+    let giftUpdates = {
+      ...gift,
+    };
+    delete giftUpdates.owner;
+    delete giftUpdates.id;
+    return giftUpdates;
+  }
 }
 
 module.exports = formatter
