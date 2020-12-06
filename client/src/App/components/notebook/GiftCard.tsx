@@ -16,6 +16,7 @@ import jewelPict from './ressources/jewel.jpg';
 import videoGamePict from './ressources/videoGames.jpeg';
 import techoPict from './ressources/technologie.jpg';
 import sportPict from './ressources/sport.png';
+import associationPict from './ressources/association.jpg'
 
 import { Autocomplete } from '@material-ui/lab';
 import { giftTypes } from '../common/utils';
@@ -31,8 +32,9 @@ function getPictureByType(giftType: giftKind | undefined) {
     case 'videogame': return {pict: videoGamePict, name: 'Jeux vidéo'};
     case 'techno': return {pict: techoPict, name: 'Technologie'};
     case 'sport': return {pict: sportPict, name: 'Sport'};
+    case 'association': return {pict: associationPict, name: 'Association'};
     case 'other': return {pict: giftPict, name: 'Autre'};
-    default: return {pict: giftPict, name: ''};
+    default: return {pict: giftPict, name: 'other'};
   }
 }
 
