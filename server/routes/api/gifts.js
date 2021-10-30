@@ -6,6 +6,8 @@ const router = require('express').Router();
 const formatter = require('../utils');
 const { VISIBILITY, ROLES } = require('../../models/utils');
 
+const db = getFirestore();
+
 router.get('/', auth.optional, (req, res, next) => {
     const {payload} = req;
 
@@ -21,11 +23,8 @@ router.get('/', auth.optional, (req, res, next) => {
     else if (payload && payload.id)
     {
         try {
-            Gifts.find({$or:[{ visibility: VISIBILITY.LoggedIn }, {visibility: VISIBILITY.Owner }] })
-            .then(gifts => {
-                console.log('API Gifts get all Gifts as CUSTOMER');
-                return res.json(formatter.formatGiftByMember(gifts))
-            })
+            const gifts = await db.collection('gifts').get();
+            return res.json(formatter.formatGiftByMember(gifts))
         } catch (error){
             console.log(error);
             return res.status(500).send({status: 500, message: 'Couldnt get gifts'});

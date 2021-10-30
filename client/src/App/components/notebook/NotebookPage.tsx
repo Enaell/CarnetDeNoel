@@ -3,7 +3,6 @@ import { Row } from '../common/Flexbox';
 import { UserType } from '../common/types';
 import { Route } from 'react-router-dom';
 import { NotebookPanel } from './NotebookPanel';
-import { useNoteBook } from './notebookHooks';
 
 export const NotebookPage = () => {
 

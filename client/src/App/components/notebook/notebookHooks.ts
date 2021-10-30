@@ -1,14 +1,37 @@
+import { getFirestore } from "@firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { giftApi } from "../../apiClient/ApiClient";
 import { GiftType, UserType } from "../common/types";
 
 
-export function useNoteBook() {
-  const [giftsByPerson, setGiftsByPerson] = useState({} as {[member: string] : GiftType[]} );
-
-  const user = useSelector((state: any) => state.user as UserType)
+export function useNoteBook(allGifts: {[member: string] : GiftType[]}) {
   
+  const user = useSelector((state: any) => state.user as UserType)
+
+  const [giftsByPerson, setGiftsByPerson] = useState({} as {[member: string] : GiftType[]} );
+  
+  const [gifts, setGifts] = useState(allGifts);
+
+   useEffect(() => {
+    const db = getFirestore();
+    console.log('=====================================')
+    let newGifts = {} as {[member: string] : GiftType[]};
+    getDocs(collection(db, "gifts")).then(querySnapshot => {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as GiftType;
+        console.log(doc.data());
+        if (data.name) {
+          if (!newGifts[data.name])
+            newGifts[data.name] = [data];
+          else
+            newGifts[data.name] = [...newGifts[data.name], data]
+        }});
+    });
+    setGifts(newGifts);
+  }, [])
+
   useEffect(() => {
     giftApi.getAllGifts(user?.token).then(gifts => {
       setGiftsByPerson(gifts)

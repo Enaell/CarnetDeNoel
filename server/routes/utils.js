@@ -1,22 +1,23 @@
 const formatter = {
   formatGiftByMember: (gifts) => {
     return gifts.reduce((obj, item) => {
+      const gift = item.data();
         return { ...obj,
-          [item.owner]: obj[item.owner] ? [...obj[item.owner], {
-            id: item._id,
-            owner: item.owner,
-            name: item.name,
-            price: item.price,
-            reservations: item.reservations,
-            types: item.types
+          [gift.owner]: obj[gift.owner] ? [...obj[gift.owner], {
+            id: gift._id,
+            owner: gift.owner,
+            name: gift.name,
+            price: gift.price,
+            reservations: gift.reservations,
+            types: gift.types
           }]
         : [{
-          id: item._id,
-          owner: item.owner,
-          name: item.name,
-          price: item.price,
-          reservations: item.reservations,
-          types: item.types
+          id: gift._id,
+          owner: gift.owner,
+          name: gift.name,
+          price: gift.price,
+          reservations: gift.reservations,
+          types: gift.types
         }]}   
     }, {})
     
@@ -32,4 +33,3 @@ const formatter = {
 }
 
 module.exports = formatter
- 

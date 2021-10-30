@@ -16,6 +16,8 @@ import theme from '../theme';
 import { withStyles } from '@material-ui/core/styles';
 import Routes from './Routes';
 
+import { initializeApp } from "firebase/app";
+
 console.log(React.version);
 
 const styles = (theme: any) => ({
@@ -38,6 +40,19 @@ const styles = (theme: any) => ({
   }
 });
 
+const firebaseConfig = {
+
+  apiKey: "AIzaSyD3NciLr8M-NP-CSUeHkHTdNoc0XyCoyO8",
+  authDomain: "carnetdenoel.firebaseapp.com",
+  projectId: "carnetdenoel",
+  storageBucket: "carnetdenoel.appspot.com",
+  messagingSenderId: "637589072780",
+  appId: "1:637589072780:web:48eaff09bdc3a326a744a9",
+  measurementId: "G-3GWD8F0B33"
+};
+
+
+
 counterpart.registerTranslations('En', localeEn);
 counterpart.registerTranslations('Fr', localeFr);
 counterpart.registerTranslations('Cn', localeCn);
@@ -49,6 +64,11 @@ store.getState().user && store.getState().user.language
 : counterpart.setLocale('Fr');
 
 class App extends Component {
+  
+  constructor(props: any) {
+    super(props);
+    initializeApp(firebaseConfig);
+  }
 
   render() {
     return (

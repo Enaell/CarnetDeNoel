@@ -38,7 +38,7 @@ export const giftApi = {
       });
       const json = await res.json();
       return {success: true, message: json};
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       return {success: false, message: error.message}
     }
@@ -62,7 +62,7 @@ export const giftApi = {
       });
       const json = await res.json();
       return {success: true, message: json};
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       return {success: false, message: error.message}
     }
@@ -84,7 +84,7 @@ export const giftApi = {
       });
       const json = await res.json();
       return {success: true, message: json};
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       return {success: false, message: error.message}
     }
@@ -102,7 +102,7 @@ export const giftApi = {
       });
       const json = await res.json();
       return {success: true, message: json};
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       return {success: false, message: error.message}
     }

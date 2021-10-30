@@ -8,6 +8,8 @@ var logger = require('morgan');
 const cors = require("cors");
 const mongoose = require('mongoose');
 
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
 
 //Configure mongoose's promise to global promise
 mongoose.promise = global.Promise;
@@ -29,6 +31,15 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'languagelearningapp', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+
+const serviceAccount = require('./carnetdenoel-firebase-adminsdk-zywbb-b846c7d73e.json');
+
+initializeApp({
+  credential: cert(serviceAccount)
+});
+
+
+
 
 mongoose
   .connect(
