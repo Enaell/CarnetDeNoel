@@ -1,7 +1,6 @@
 const formatter = {
   formatGiftByMember: (gifts) => {
-    return gifts.reduce((obj, item) => {
-      const gift = item.data();
+    return gifts.reduce((obj, gift) => {
         return { ...obj,
           [gift.owner]: obj[gift.owner] ? [...obj[gift.owner], {
             id: gift._id,
@@ -18,7 +17,7 @@ const formatter = {
           price: gift.price,
           reservations: gift.reservations,
           types: gift.types
-        }]}   
+        }]}
     }, {})
     
   },

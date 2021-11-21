@@ -2,6 +2,7 @@ import { GiftType } from "../components/common/types";
 
 export const giftApi = {
   getAllGifts: async (token?: string) => {
+    // const getGiftsUrl = `http://localhost:5000/api/gifts`
     const getGiftsUrl = `http://46.101.130.5:5000/api/gifts`
     const res = await fetch(getGiftsUrl,
     {
@@ -25,6 +26,7 @@ export const giftApi = {
     return {success: false, message: 'gift has no name'};
 
     try {
+      // const res = await fetch(`http://localhost:5000/api/gifts/`,{
       const res = await fetch(`http://46.101.130.5:5000/api/gifts/`,{
         headers: {
           'Authorization': `Token ${token}`,
@@ -49,7 +51,8 @@ export const giftApi = {
     try {
       if (!gift.name)
        return {success: false, message: 'gift has no name'};
-      const res = await fetch(`http://46.101.130.5:5000/api/gifts/${gift.id}`,{
+      //  const res = await fetch(`http://localhost:5000/api/gifts/${gift.id}`,{
+       const res = await fetch(`http://46.101.130.5:5000/api/gifts/${gift.id}`,{
         headers: {
           'Authorization': `Token ${token}`,
           'Accept': 'application/json',
@@ -71,6 +74,7 @@ export const giftApi = {
     console.log('api client gift delete gift');
     console.log(gift);
     try {
+      // const res = await fetch(`http://localhost:5000/api/gifts/${gift.id}`,{
       const res = await fetch(`http://46.101.130.5:5000/api/gifts/${gift.id}`,{
         headers: {
           'Authorization': `Token ${token}`,
@@ -91,6 +95,7 @@ export const giftApi = {
   },
   addCollection: async (collection: any, token: string) => {
     try {
+      // const res = await fetch(`http://localhost:5000/api/gifts/collection`,{
       const res = await fetch(`http://46.101.130.5:5000/api/gifts/collection`,{
         headers: {
           'Authorization': `Token ${token}`,

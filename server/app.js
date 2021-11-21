@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'languagelearningapp', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
-const serviceAccount = require('./carnetdenoel-firebase-adminsdk-zywbb-b846c7d73e.json');
+const serviceAccount = require('./carnetdenoel-6f9743b369ce.json');
 
 initializeApp({
   credential: cert(serviceAccount)

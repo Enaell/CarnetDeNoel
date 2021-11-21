@@ -6,34 +6,15 @@ import { giftApi } from "../../apiClient/ApiClient";
 import { GiftType, UserType } from "../common/types";
 
 
-export function useNoteBook(allGifts: {[member: string] : GiftType[]}) {
+export function useNoteBook() {
   
   const user = useSelector((state: any) => state.user as UserType)
 
   const [giftsByPerson, setGiftsByPerson] = useState({} as {[member: string] : GiftType[]} );
   
-  const [gifts, setGifts] = useState(allGifts);
-
-   useEffect(() => {
-    const db = getFirestore();
-    console.log('=====================================')
-    let newGifts = {} as {[member: string] : GiftType[]};
-    getDocs(collection(db, "gifts")).then(querySnapshot => {
-      querySnapshot.forEach((doc) => {
-        const data = doc.data() as GiftType;
-        console.log(doc.data());
-        if (data.name) {
-          if (!newGifts[data.name])
-            newGifts[data.name] = [data];
-          else
-            newGifts[data.name] = [...newGifts[data.name], data]
-        }});
-    });
-    setGifts(newGifts);
-  }, [])
-
   useEffect(() => {
     giftApi.getAllGifts(user?.token).then(gifts => {
+      console.log('===========================================')
       setGiftsByPerson(gifts)
     });
   }, [user]);
@@ -47,7 +28,7 @@ export function useNoteBook(allGifts: {[member: string] : GiftType[]}) {
         const res = await giftApi.createGift(newGift, user.token);
         if (res.success)
         {
-          const gift = {...newGift, id: res.message.gifts.insertedIds[0]}
+          const gift = {...newGift, id: newGift.name}
           setGiftsByPerson({...giftsByPerson, [user.username]: [gift, ...memberGifts]});
         }
       }

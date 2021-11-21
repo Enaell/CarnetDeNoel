@@ -5,10 +5,11 @@ const Users = mongoose.model('Users');
 const router = require('express').Router();
 const formatter = require('../utils');
 const { VISIBILITY, ROLES } = require('../../models/utils');
+const { getFirestore } = require('firebase-admin/firestore');
 
 const db = getFirestore();
 
-router.get('/', auth.optional, (req, res, next) => {
+router.get('/', auth.optional, async (req, res, next) => {
     const {payload} = req;
 
     if (payload && payload.id && payload.role === ROLES.Admin)
@@ -23,7 +24,12 @@ router.get('/', auth.optional, (req, res, next) => {
     else if (payload && payload.id)
     {
         try {
-            const gifts = await db.collection('gifts').get();
+            let gifts = []
+            const snapshot = await db.collection('gifts').get();
+            snapshot.forEach((doc) => {
+                gifts = [...gifts, doc.data()];
+              });
+
             return res.json(formatter.formatGiftByMember(gifts))
         } catch (error){
             console.log(error);
@@ -67,13 +73,16 @@ router.post('/', auth.required, async (req, res, next) => {
             return res.status(500).send({status: 500, message: 'Gift must have name'});
 
         const finalGifts = gifts.map(gift => {
-            return new Gifts({
+            return {
                 ...gift,
                 owner: user.username,
-            })
-        })
-        const data = await Gifts.collection.insertMany(finalGifts);
-        return res.json({gifts: data})
+                _id: gift.name,
+            }});
+        // const data = await Gifts.collection.insertMany(finalGifts);
+        const docRef = db.collection('gifts').doc(finalGifts[0].name);
+        await docRef.set(finalGifts[0]);
+
+        return res.json({gifts: {}})
     }
     catch(error) {
         console.log("Couldn't save Gifts");
@@ -95,8 +104,12 @@ router.patch('/:giftId', auth.required, async (req, res, next) => {
             
         const giftUpdates = formatter.formatGiftUpdates(gift);
 
-        const w = await Gifts.findByIdAndUpdate(giftId, giftUpdates, {new: true})
-        return res.status(200).send({status:200, message: w})
+        const docRef = db.collection('gifts').doc(giftId);
+        await docRef.update(giftUpdates);
+
+        // const w = await Gifts.findByIdAndUpdate(giftId, giftUpdates, {new: true})
+        
+        return res.status(200).send({status:200, message: giftUpdates})
     } catch (error) {
         console.log("Couldn't update gift");
         console.log(error);
@@ -109,7 +122,8 @@ router.delete('/:giftId', auth.required, async (req, res, next) => {
         const { payload: { id, role } } = req;
         const giftId = req.params.giftId;
 
-        await Gifts.findByIdAndDelete(giftId);
+        // await Gifts.findByIdAndDelete(giftId);
+        const deleteGift = await db.collection('gifts').doc(giftId).delete();
         return res.status(200).send({status: 200, message: `wordList ${giftId} deleted`});
     
     } catch (error) {
