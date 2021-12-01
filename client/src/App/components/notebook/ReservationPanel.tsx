@@ -1,11 +1,13 @@
 import { Box, Chip, FormControlLabel, makeStyles, Switch } from '@material-ui/core';
 import React, { useState } from 'react';
+import { isMobile } from 'react-device-detect';
 import { Column, Row } from '../common/Flexbox';
 import { GiftType } from '../common/types';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    paddingTop: '10px'
+    paddingTop: '10px',
+    width: '10%'
   },
   chip: {
     borderRadius:'25px', padding:'8px', margin: '4px',color:'white', backgroundColor: theme.palette.primary.main
@@ -25,8 +27,8 @@ export const ResevationPanel = ({ userName, gift, onReserve}: {
   return (
     <div className={classes.root} onMouseOver={() => {setOnHover(true)}} onMouseLeave={()=>{setOnHover(false)}}>
 
-    <Column horizontal='start' width='135px'>
-       { (onHover || !gift.reservations || !gift.reservations.length) && <FormControlLabel
+    <Column horizontal='start' width= {isMobile ? '100%' : '135px'}>
+       { (onHover || isMobile || !gift.reservations || !gift.reservations.length) && <FormControlLabel
           labelPlacement="top"
           control={<Switch 
             color='primary'
@@ -43,14 +45,21 @@ export const ResevationPanel = ({ userName, gift, onReserve}: {
             }} 
             name='Je participe !'
           />}
-        label='Je participe !'
+          style={isMobile ? {marginLeft: '6px'} : undefined}
+        label={isMobile ? '' : 'Je participe !'}
       />}
-      <Row wrap width='100%' horizontal='start'>
+      <Row wrap width='100%' horizontal='start' style={{marginLeft: '10px'}}>
         {gift.reservations?.map((reservation, index) => (
-          <Box key={`${reservation.userName}${index}`} className={classes.chip} >{reservation.userName}</Box>
+          <Box key={`${reservation.userName}${index}`} className={classes.chip} >{isMobile ? getForMobileName(reservation.userName) : reservation.userName}</Box>
         ))}
       </Row>
     </Column>
     </div>
   )
+}
+
+function getForMobileName(name: string) {
+  if (name.length > 4)
+    return `${name.substr(0, 3)}..`
+  return name;
 }

@@ -20,6 +20,7 @@ import associationPict from './ressources/association.jpg'
 
 import { Autocomplete } from '@material-ui/lab';
 import { giftTypes } from '../common/utils';
+import { isMobile } from 'react-device-detect';
 
 function getPictureByType(giftType: giftKind | undefined) {
   switch (giftType) {
@@ -54,9 +55,9 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
   const [pictureInfo, setPictureInfo] = useState(getPictureByType(newGift?.types ? newGift?.types[0]: undefined));
 
   return (
-    <div style={{width: '615px', height: '100%'}} onMouseOver={() => {setOnHover(true)}} onMouseLeave={()=>{setOnHover(false)}}>
+    <div style={{width: isMobile ? '80%' : '615px', height: '100%'}} onMouseOver={() => {setOnHover(true)}} onMouseLeave={()=>{setOnHover(false)}}>
       <Row width='100%' style={{position: 'relative', margin: '10px'}} >
-        <CardMedia 
+        {!isMobile && <> <CardMedia 
           style={{ 
             position: 'absolute',
             zIndex: 2,
@@ -105,12 +106,12 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
             )}
           />
           }
-        </Row>
+        </Row></>}
         <Card
           elevation={onHover ? 5 : 1}
-          style={{width: '500px', paddingTop: '0', margin: '0 0 0 75px'}}
+          style={{width: isMobile ? '100%' : '500px', paddingTop: '0', margin: isMobile ? '' : '0 0 0 75px'}}
         >
-          <CardContent style={{paddingLeft: '95px'}} >
+          <CardContent style={ isMobile ? {padding: '10px 0px 10px 10px'} : { paddingLeft: '95px' }} >
           <Row width={'100%'} height={'100%'} horizontal='space-between'>
             <Column width={'100%'} height={'110px'}>
               <TextField
@@ -128,7 +129,7 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
                   InputProps={onModify ? undefined : {
                     readOnly: true,
                   }}
-                  style={{width: '100px'}}
+                  style={{width: isMobile ? '50px' : '100px'}}
                   type='number'
                   label='Prix moyen'
                   value={newGift.price?.average}
@@ -138,7 +139,7 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
                   InputProps={onModify ? undefined : {
                     readOnly: true,
                   }}
-                  style={{width: '100px'}}
+                  style={{width: isMobile ? '50px' : '100px'}}
                   type='number'
                   label='Prix Max'
                   value={newGift.price?.max}
@@ -148,7 +149,7 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
                   InputProps={onModify ? undefined : {
                     readOnly: true,
                   }}
-                  style={{width: '100px'}}
+                  style={{width: isMobile ? '50px' : '100px'}}
                   type='number'
                   label='Prix Min'
                   value={newGift.price?.min}
@@ -156,7 +157,7 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
                 />}
               </Row>
             </Column>
-            { isOwned && onHover && <Column>
+            { isOwned && (onHover || isMobile) && <Column>
             { !onModify ?
               <>
                 <Button onClick={() => setOnModify(true)}>

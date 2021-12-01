@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router'
 import { Column, Row } from '../../common/Flexbox';
 import { Typography } from '@material-ui/core';
-import { welcomeSection, backgroundImg, connectionDiv } from './styles.d';
+import { welcomeSection, backgroundImg, connectionDiv, connectionDivMobile, backgroundImgMobile } from './styles.d';
 
 import translate from 'counterpart';
 import { LoginTabs } from '../../login/LoginTabs';
 import { IntroductionColumn } from './IntroductionColumn';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '../../common/Buttons';
+import { isMobile } from 'react-device-detect';
 
 type WelcomeSectionType = {
   onLogin: (username: string, password: string) => Promise<void>, 
@@ -80,16 +81,16 @@ export const WelcomeSection = ({
 
   return (
     <Column horizontal='start' vertical={'center'} className='welcomeSection' style={{ ...welcomeSection, position: position}}>
-      <div style={backgroundImg}/>
-      <Column horizontal='end' width='45%'>
-        <Column horizontal={'start'} style={ connectionDiv }>
-          <Typography  style={{fontWeight : 'bold'}} color="secondary" variant='h2' noWrap>
+      <div style={isMobile ? backgroundImgMobile : backgroundImg}/>
+      <Column horizontal={isMobile ? 'center' : 'end'} width={ isMobile ? '100%' : '45%'}>
+        <Column horizontal={'start'} style={ isMobile ? connectionDivMobile : connectionDiv }>
+          <Typography  style={{fontWeight : 'bold'}} align={ isMobile ? 'center': 'inherit' } color="secondary" variant='h2' noWrap={!isMobile}>
             {translate('application-name')}
           </Typography>
           <form style={{width: '100%', height: '100%', paddingTop: '20px'}}>
             <Row width='100%' height='100%' vertical={'center'}>
               <Column height='100%' width='100%' vertical={'space-around'}>
-                <IntroductionColumn />
+                { !isMobile && <IntroductionColumn /> }
                 <LoginTabs
                   tabNumber={tabNumber}
                   handleTabChange={handleTabChange} 

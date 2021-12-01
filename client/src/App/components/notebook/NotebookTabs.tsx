@@ -11,6 +11,7 @@ import { GiftCard } from './GiftCard';
 import { useSelector } from 'react-redux';
 import { useNoteBook } from './notebookHooks';
 import { ResevationPanel } from './ReservationPanel';
+import { isMobile } from 'react-device-detect';
 
 type TabPanelProps = {
   gifts?: GiftType[],
@@ -36,7 +37,7 @@ function TabPanel({gifts, userName, isOwned, value, index, classes, updateGift, 
       {...other}
     >
       <Column width='100%' horizontal='center'>
-        {isOwned && <GiftCard isOwned={isOwned} creation createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>}
+        <Row>{isOwned && <GiftCard isOwned={isOwned} creation createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>}</Row>
         {value === index && (gifts?.map((gift, i) => (
           <Row key={`${gift.id}${i}`}>
             <GiftCard isOwned={isOwned} key={gift.name} gift={gift} createGift={createGift} updateGift={updateGift} deleteGift={deleteGift}/>
@@ -76,7 +77,8 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '100%',
     // backgroundImage: `url(${tabBG})`,
     borderRadius: '25px',
-    overflow: 'auto'
+    overflow: 'auto',
+    overflowX: 'hidden'
   },
   banner: {
     position: 'absolute',
