@@ -1,6 +1,6 @@
 import { Box, Chip, FormControlLabel, makeStyles, Switch } from '@material-ui/core';
 import React, { useState } from 'react';
-import { isMobile } from 'react-device-detect';
+import { useIsMobile } from '../../hooks/isMobileHook';
 import { Column, Row } from '../common/Flexbox';
 import { GiftType } from '../common/types';
 
@@ -19,6 +19,8 @@ export const ResevationPanel = ({ userName, gift, onReserve}: {
   gift: GiftType,
   onReserve: (gift: GiftType) => Promise<void>
 }) => {
+  const isMobile = useIsMobile();
+
   const [isReserved, setIsReserved] = useState(gift.reservations?.some(reservation => reservation.userName === userName))
 
   const classes = useStyles();

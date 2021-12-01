@@ -20,7 +20,7 @@ import associationPict from './ressources/association.jpg'
 
 import { Autocomplete } from '@material-ui/lab';
 import { giftTypes } from '../common/utils';
-import { isMobile } from 'react-device-detect';
+import { useIsMobile } from '../../hooks/isMobileHook';
 
 function getPictureByType(giftType: giftKind | undefined) {
   switch (giftType) {
@@ -48,6 +48,8 @@ export const GiftCard = ({ gift, isOwned, creation = false, createGift, updateGi
   deleteGift: (gift: GiftType) => void
 }) => {
 
+
+  const isMobile = useIsMobile();
   const [onHover, setOnHover] = useState(false);
   
   const [onModify, setOnModify] = useState(creation);

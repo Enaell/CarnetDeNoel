@@ -11,7 +11,6 @@ import { GiftCard } from './GiftCard';
 import { useSelector } from 'react-redux';
 import { useNoteBook } from './notebookHooks';
 import { ResevationPanel } from './ReservationPanel';
-import { isMobile } from 'react-device-detect';
 
 type TabPanelProps = {
   gifts?: GiftType[],

@@ -9,7 +9,7 @@ import { LoginTabs } from '../../login/LoginTabs';
 import { IntroductionColumn } from './IntroductionColumn';
 import { useDispatch } from 'react-redux';
 import { LoadingButton } from '../../common/Buttons';
-import { isMobile } from 'react-device-detect';
+import { useIsMobile } from '../../../hooks/isMobileHook';
 
 type WelcomeSectionType = {
   onLogin: (username: string, password: string) => Promise<void>, 
@@ -26,6 +26,8 @@ export const WelcomeSection = ({
   changeTabNumber,
   position = 'relative'
 } : WelcomeSectionType) => {
+
+  const isMobile = useIsMobile();
 
   const dispatch = useDispatch();
   let history = useHistory();
